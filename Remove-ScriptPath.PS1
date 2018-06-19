@@ -63,7 +63,7 @@ function Remove-ScriptPath
 
                  else {
 
-                 Write-Output "$User.SamAccountName Does not have anything in Script Path Set" | Format-Table
+                 Write-Output "$User.SamAccountName Does not have anything in Script Path Set" | Format-List
                         
                     }
 
