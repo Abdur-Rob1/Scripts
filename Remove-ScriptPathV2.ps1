@@ -1,8 +1,8 @@
 <#
 #Script name: Remove ScriptPath
 #Creator: Abdur Rob
-#Date: 2018-06-19
-#Revision: 1
+#Date: 2018-06-20
+#Revision: 2
 .Synopsis
    Script which retrieves the all the users with a logon script set.
 .DESCRIPTION
