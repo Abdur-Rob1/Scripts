@@ -26,44 +26,50 @@ function Remove-ScriptPath
 
     Begin
     {
-          #Get all the users properties from AD 
+          #Get all the users properties from AD and create variables
+          
+                $Username = Get-ADUser -Properties * -Identity abdur-rob1
 
-                $Username = Get-ADUser -Properties * -Filter *
-
+                #$Username = Get-ADUser -Properties * -Filter *
+                
+                    #$ScriptPath = "SBS_LOGIN_SCRIPT.bat"
+                                        
+                        $ScriptValue = "Test"
+                                    
     }
 
     Process {
-
     
-                foreach ($user in $username) {
+                foreach ($User in $username) {
                
                         #Get the users ScriptPath property and check if it matches
 
-                If ($User.ScriptPath -match "SBS_LOGIN_SCRIPT.bat")
+                if ($User.ScriptPath -eq "Test")
                 
+
                 {
                         #Set-ADUser -ScriptPath $null
                         #Clear-ItemProperty -Name ScriptPath -Path $Username.ScriptPath
 
-                        Write-Output "$User.SamAccountName does have a Script Path Set" | Format-List
+                        Write-Output "$User DOES HAVE a Script Path Set"
                 }
                 
                 #If the user has anything set in the ScriptPath property then delete the value
                               
-                 elseif ($User.ScriptPath -notlike "SBS_LOGIN_SCRIPT.bat") 
+                 elseif ($User.ScriptPath -ne "$ScriptValue")
                  
                 {
                         #Set-ADUser -ScriptPath $null
                         #Clear-ItemProperty -Name ScriptPath -Path $Username.ScriptPath
                         
-                        Write-host  "$User.SamAccountName Does not have a Script Path Set" | Format-List
+                        Write-host  "$User DOES NOT have a Script Path Set"
                 }
                 
                 #Skip the user if nothing is set
 
                  else {
 
-                 Write-Output "$User.SamAccountName Does not have anything in Script Path Set" | Format-List
+                 Write-Output "$User NOTHING in Script Path Set"
                         
                     }
 
@@ -78,4 +84,6 @@ function Remove-ScriptPath
 
 }
 
-Remove-ScriptPath
+#Call function and format the list
+
+Remove-ScriptPath | Format-List
