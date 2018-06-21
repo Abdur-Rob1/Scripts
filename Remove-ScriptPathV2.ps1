@@ -1,8 +1,8 @@
 <#
 #Script name: Remove ScriptPath
 #Creator: Abdur Rob
-#Date: 2018-06-20
-#Revision: 2
+#Date: 2018-06-19
+#Revision: 1
 .Synopsis
    Script which retrieves the all the users with a logon script set.
 .DESCRIPTION
@@ -21,7 +21,7 @@ function Remove-ScriptPath
                     ValueFromPipeLine = $true,
                     ValueFromPipeLineByPropertyName = $true)]
         [Alias('User')]
-                    $Username = (Get-ADUser -Identity abdur-rob1 | Select-Object -ExpandProperty SamAccountName),
+                    $Username = (Get-ADUser -Filter * | Select-Object -ExpandProperty SamAccountName),
                     
         [Parameter(Mandatory=$False,
                     HelpMessage = "Enter the Script name",
@@ -42,7 +42,7 @@ function Remove-ScriptPath
                
                         #Get the users ScriptPath property and check if it matches
 
-                if ( (Get-ADUser -Properties * -Identity $Username | Select-Object ScriptPath) -match $ScriptValue)
+                if ( (Get-ADUser -Properties * -Filter "SamAccountName -eq '$Username'" | Select-Object ScriptPath) -match $ScriptValue)
                 
 
                 {
@@ -59,7 +59,7 @@ function Remove-ScriptPath
 
                         #Write the ouput for testing
 
-                        Write-Host $Username.ToUpper() "Has the current Logon Script Set in their profile:" (Get-ADUser -Properties * -Identity $Username | Select-Object -ExpandProperty ScriptPath)
+                        Write-Host $Username.ToUpper() "Has the current Logon Script Set in their profile:" (Get-ADUser -Properties * -Filter "SamAccountName -eq '$username'" | Select-Object -ExpandProperty ScriptPath)
                         
                     }
 
