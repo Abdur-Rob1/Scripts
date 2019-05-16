@@ -1,0 +1,47 @@
+<#
+#Script name: Restart Print Spooler
+#Creator: Abdur Rob
+#Date: 2019-05-15
+#Revision: 1
+.Synopsis
+   Script which checks the service state and restarts the print spooler service.
+.DESCRIPTION
+   Script which will restart the print services if required.
+.EXAMPLE
+   Restart-Spooler -Servername Server01
+#>
+
+function Restart-Spooler
+{ 
+  [cmdletbinding()]
+  param(
+         [Parameter( Mandatory=$true
+                   , HelpMessage='Enter the name of the servers to restart the service'
+                   )
+         ]
+         [string]$Servername 
+
+       )
+
+#Check to see what the current service state is
+
+$Service = Get-Service -Name Spooler -ComputerName $Servername | Select-Object -ExpandProperty Status
+
+    Write-Host "The print spooler service is currently $Service"
+
+
+#Restart the print sppooler service
+
+if ($Service -ne "$null")
+
+{
+
+Invoke-Command -ComputerName $Servername -ScriptBlock {Restart-Service -Name Spooler -Force} -ErrorAction Stop
+
+    Write-Host "The services have been restarted"
+    
+    }
+
+}
+
+Restart-Spooler
