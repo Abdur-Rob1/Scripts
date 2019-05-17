@@ -1,0 +1,13 @@
+<#
+#Script name: Get-ADInfo
+#Creator: Abdur Rob
+#Date: 2018-09-13
+#Revision: 1
+.Synopsis
+   A script which retrieves AD users and exports them to a CSV.
+.DESCRIPTION
+   The script will get all the users from a specific OU, select specific properties and then export them to a CSV file in a specified location.
+#>
+
+Get-AdUser -SearchBase "OU=MyCompany,OU=MyUsers,OU=MyTestOU,DC=MyDomain,DC=local" -Filter * -Properties DisplayName, Title | Select-Object ' 
+DisplayName, Title | Export-Csv C:\Users\User1\Downloads\Users_Titles.CSV
