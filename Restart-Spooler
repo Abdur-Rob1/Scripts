@@ -2,7 +2,7 @@
 #Script name: Restart Print Spooler
 #Creator: Abdur Rob
 #Date: 2019-05-15
-#Revision: 2
+#Revision: 3
 .Synopsis
    A script which checks and displays the current service state and then restarts the print spooler service.
 .DESCRIPTION
