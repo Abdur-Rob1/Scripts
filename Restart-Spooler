@@ -33,7 +33,7 @@ foreach ($Computer in $ComputerName)
 
        #Output the results to the screen for each computer
 
-            Write-Host "The print spooler service is on $Computer currently $Services"
+            Write-Host "The print spooler service on $Computer is currently $Services"
     
 }
 
@@ -62,10 +62,11 @@ Invoke-Command -ComputerName $ComputerName -ScriptBlock {Restart-Service -Name S
     
         }
 
-    }  
-     
+    }
+    
+    Write-Host "Press any key to continue ....."
+        $x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") 
 }
 
 #Call function with array
-
 Restart-Spooler
