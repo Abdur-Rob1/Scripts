@@ -1,0 +1,2 @@
+Get-AdUser -SearchBase "OU=MyCompany,OU=MyUsers,OU=MyTestOU,DC=MyDomain,DC=local" -Filter * -Properties DisplayName, Title | Select-Object ' 
+DisplayName, Title | Export-Csv C:\Users\User1\Downloads\Users_Titles.CSV
