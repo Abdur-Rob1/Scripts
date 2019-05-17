@@ -6,7 +6,7 @@
 .Synopsis
    A script which retrieves AD users and exports them to a CSV.
 .DESCRIPTION
-   The script will get all the users from a specific OU, select specific properties and then export them to a CSV file in a specified location.
+   The script will get all the users from a specific OU based on DN format, select specific properties and then export them to a CSV file in a chosen location.
 #>
 
 Get-AdUser -SearchBase "OU=MyCompany,OU=MyUsers,OU=MyTestOU,DC=MyDomain,DC=local" -Filter * -Properties DisplayName, Title | Select-Object ' 
