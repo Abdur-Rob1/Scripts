@@ -64,9 +64,12 @@ Invoke-Command -ComputerName $ComputerName -ScriptBlock {Restart-Service -Name S
 
     }
     
+    #Prompt the user for confirmation
+
     Write-Host "Press any key to continue ....."
         $x = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") 
 }
 
 #Call function with array
+
 Restart-Spooler
