@@ -6,17 +6,17 @@ function Test-Hostnew
                    , HelpMessage='Enter the name of the servers to restart the service'
                    )
          ]
-         [string[]]$ComputerName = @("CTXSHDE01","CTXSHDE02","CTXSHDE03","WSUS")
+         [string[]]$ComputerName = @("CTX1","CTX2","CTX3","WSUS")
 
        )
 
 #Splatting variable
 
 $splat = @{
-    To = "arob@acumension.com"
-    From = "Testuser1@acumension.com"
+    To = "ar@company.com"
+    From = "Testuser1@company.com"
     Subject = "Ping Response"
-    SmtpServer = "exch2010.lca.local"
+    SmtpServer = "server01.local"
 }
 
 
