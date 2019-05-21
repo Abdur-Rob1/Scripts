@@ -1,0 +1,62 @@
+<#
+#Script name: Ping-Test
+#Creator: Abdur Rob
+#Date: 2019-05-20
+#Revision: 3
+.Synopsis
+   A script which pings multiple servers and sends an email if the servers stop responding.
+.DESCRIPTION
+   The script will ping servers and return a value, based on that value the script will send an email notification to let the team know a server has stopped responding.
+.EXAMPLE
+   Ping-Test -ComputerName Server01, Server02, Server03, Server04
+#>
+
+function Ping-Test
+{ 
+  [cmdletbinding()]
+  param(
+         [Parameter( Mandatory=$false
+                   , HelpMessage='Enter the name of the servers to test the connection'
+                   )
+         ]
+         [string[]]$ComputerName = @("Server01","Server02","Server03","Server04")
+
+       )
+
+#Splatting variable parameters
+
+$Param = @{
+    To = "itsupport@company.com"
+    From = "ITnotifications@company.com"
+    Subject = "Ping Response"
+    SmtpServer = "Mail.exchange.com"
+}
+
+
+#Test the ping response for each of the servers
+
+foreach ($Computer in $ComputerName)
+
+{
+
+$TestCon = Test-Connection -ComputerName $ComputerName -Quiet
+
+    if ($TestCon -match "True")
+    
+    {
+
+#Send an email and display in the shell when a server stops responding
+
+Send-MailMessage @Param -Body "The Server $Computer is currently responding"
+
+    Write-Host "The Server $Computer is currently responding"
+
+        }
+    
+    }
+    
+}
+
+#Run the function
+
+Ping-Test
