@@ -1,0 +1,75 @@
+function Test-Hostnew
+{ 
+  [cmdletbinding()]
+  param(
+         [Parameter( Mandatory=$false
+                   , HelpMessage='Enter the name of the servers to restart the service'
+                   )
+         ]
+         [string[]]$ComputerName = @("CTXSHDE01","CTXSHDE02","CTXSHDE03","WSUS")
+
+       )
+
+#Splatting variable
+
+$splat = @{
+    To = "arob@acumension.com"
+    From = "Testuser1@acumension.com"
+    Subject = "Ping Response"
+    SmtpServer = "exch2010.lca.local"
+}
+
+
+#Test the ping response from the servers
+
+
+$TestDE01 = Test-Connection -ComputerName $ComputerName -Quiet -Count 2
+
+if ($TestDE01[0] -match "True")
+
+{
+
+Write-Host "The server $($ComputerName[0]) is currently responding"
+
+Send-MailMessage @splat -Body "$($ComputerName[0]) is currently responding"
+
+if ($TestDE01[1] -match "True")
+
+{
+
+Write-Host "The server $($ComputerName[1]) is responding"
+
+Send-MailMessage @splat -Body "$($ComputerName[1]) is responding"
+
+if ($TestDE01[2] -Match "True")
+
+{
+
+Write-Host "The server $($ComputerName[2]) is responding"
+
+Send-MailMessage @splat -Body "$($ComputerName[2]) is responding"
+
+if ($TestDE01[3] -match "False")
+
+{
+
+Write-Host "The server $($ComputerName[3]) is not responding"
+
+Send-MailMessage @splat -Body "$($ComputerName[3]) is not responding"
+
+       
+}
+    
+
+    }
+    
+
+        }
+
+
+            }
+
+
+}
+
+Test-Hostnew
