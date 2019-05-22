@@ -6,7 +6,7 @@
 .Synopsis
    A script which pings multiple servers and sends an email if the servers stop responding.
 .DESCRIPTION
-   The script will ping servers and return a value, based on that value the script will send an email notification to let the team know a server has stopped responding.
+   The script will ping servers and return a value, based on that value the script will send an email notification to let the team know.
 .EXAMPLE
    Ping-Test -ComputerName Server01, Server02, Server03, Server04
 #>
@@ -26,10 +26,10 @@ function Ping-Test
 #Splatting variable parameters
 
 $Param = @{
-    To = "itsupport@company.com"
+    To = "ar@company.com"
     From = "ITnotifications@company.com"
-    Subject = "Ping Response"
-    SmtpServer = "Mail.exchange.com"
+    Subject = "Ping Response for Servers"
+    SmtpServer = "mail.company.com"
 }
 
 
@@ -39,24 +39,33 @@ foreach ($Computer in $ComputerName)
 
 {
 
-$TestCon = Test-Connection -ComputerName $ComputerName -Quiet
+$TestCon = Test-Connection -ComputerName $Computer -Count 2 -Quiet
 
     if ($TestCon -match "True")
     
-    {
+{
 
-#Send an email and display in the shell when a server stops responding
+#Write output to the host if the server is responding
 
-Send-MailMessage @Param -Body "The Server $Computer is currently responding"
+    Write-Host "The Server $Computer is responding"
 
-    Write-Host "The Server $Computer is currently responding"
+}
+
+else
+
+{
+
+#Send an email letting the team know if the servers have stopped responding
+
+Send-MailMessage @Param -Body "The Server $Computer is not responding"
 
         }
+
     
     }
     
 }
 
-#Run the function
+#Call the function with array
 
 Ping-Test
