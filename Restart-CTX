@@ -1,0 +1,15 @@
+#Load the Citrix Snapin
+
+Add-PSSnapin -Name Citrix.Broker.Admin.V2
+
+#Import the VMware module 
+
+Import-Module -Name VMware.VimAutomation.Core
+
+#Connect to the VCenter Server
+
+Connect-VIServer -Server VCenter.local
+
+#Get a list of Citrix Session hosts which are in the unregistered state and then restart them using the VMWare module 
+
+Get-VM -Name (Get-BrokerMachine -AdminAddress CitrixDDC | Where-Object -Property RegistrationState -EQ "Unregistered" | Select-Object -ExpandProperty HostedMachineName) | Restart-VM -WhatIf
