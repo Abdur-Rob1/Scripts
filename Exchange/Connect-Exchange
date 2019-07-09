@@ -1,0 +1,9 @@
+function Connect-ExchangeSession
+{
+
+$ExchangeServer = 'On Prem Exchange Server'
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://$ExchangeServer/PowerShell/
+Import-PSSession $Session -DisableNameChecking -AllowClobber
+
+}
+Connect-ExchangeSession
